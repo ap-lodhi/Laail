@@ -81,7 +81,7 @@ const contractSchema=new mongoose.Schema({
 
   
   const  barrowerSchema = new mongoose.Schema({
-    name:{
+    barrower_name:{
        type:String,
        required:true
     }
@@ -89,7 +89,7 @@ const contractSchema=new mongoose.Schema({
 
   
 const  Lender =mongoose.model('lender',lenderSchema)
-const  Barrower =mongoose.model('lender',barrowerSchema)
+const  Barrower =mongoose.model('barrower',barrowerSchema)
 const  contract=mongoose.model("contract", contractSchema);
 
 const User = mongoose.model('user', userSchema);

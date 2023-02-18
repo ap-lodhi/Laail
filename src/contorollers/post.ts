@@ -77,6 +77,11 @@ const lender =async(req:Request,res:Response)=>{
             name
         })
     }
+    
+    return res.status(200).send({
+        response: "success",
+        message: 'lender added  Successfuly'
+    })
 }
 
 
@@ -97,6 +102,10 @@ const barrower =async(req:Request,res:Response)=>{
              name
          })
      }
+     return res.status(200).send({
+        response: "success",
+        message: 'barrower added  Successfuly'
+    })
 }
 
 
