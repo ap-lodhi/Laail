@@ -108,6 +108,31 @@ const barrower =async(req:Request,res:Response)=>{
     })
 }
 
+// All lenders or borrowers depending on route/query string.
+
+const both = async (req:Request,res:Response)=>{
+    const query = req.query.type;
+    console.log(query)
+
+    let collectionName;
+    if (query === 'lenders') {
+      collectionName = 'lenders';
+    } else if (query === 'borrowers') {
+      collectionName = 'borrowers';
+    } else {
+      // Invalid query, return an error response
+      res.status(400).send('Invalid query string');
+      return;
+    }
+
+    const collections = schema.contract.collection(collectionName);
+    collections.find().toArray(function() {
+   
+  
+      res.status(200).json();
+    });
+}
+
 
 
 
