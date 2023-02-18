@@ -4,7 +4,7 @@ import express from 'express';
   const PORT = 8080;
 
   
-    app.get('/test' ,contoroller.test)
+    app.post('/addUser' ,contoroller.user)
 
   app.listen(PORT,():void=>{
 console.log(`server is runnig  on ${PORT}`)
