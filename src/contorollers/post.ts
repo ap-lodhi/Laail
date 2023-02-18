@@ -6,30 +6,30 @@ import schema from '../DB/schema';
  // this  is the  the user  create route  here new  user  can added
 const user = async (req: Request, res: Response) => {
 
-    let { Name, MobileNumber, Email, Location  ,Id} = req.body.body
+    const { name, mobileNumber, email, location  ,user_id} = req.body;
 //     const body: Body = request.body as Body;
 // const { name, email, password } = body;
-    console.log(Name)
-    const user1 = await schema.User.findOne({ Email })
+    console.log(req.body)
+    const user1 = await schema.User.findOne({ email })
 
     if (user1) {
         return res.status(400).send({
             response: "error",
-            message: "User already register"
+            message: "User already added"
         })
     } else {
 
         await schema.User.create({
-            Name,
-            MobileNumber,
-            Email,
-            Location,
-            Id
+            name,
+            mobileNumber,
+            email,
+            location,
+            user_id
         })
 
         return res.status(200).send({
             response: "success",
-            message: 'user sign up Successfuly'
+            message: 'user added  Successfuly'
         })
     }
 
@@ -39,4 +39,68 @@ const user = async (req: Request, res: Response) => {
 }
 
 
-export default { user};
+//  
+//   contract   route   
+
+const contract= async (req: Request, res: Response) => {
+    const {contract_id, lender_id,borrower_id,principle,interest,loan_start_date,loan_due_date,is_repaid}=req.body
+          
+    await schema.contract.create({
+            contract_id, 
+            lender_id,
+            borrower_id,
+            principle,
+            interest,
+            loan_start_date,
+            loan_due_date
+            ,is_repaid
+           })
+           return res.status(200).send({
+            response: "success",
+            message: 'contract  created Successfuly'
+        })
+}
+
+// lender  route  
+const lender =async(req:Request,res:Response)=>{
+    const {name} =req.body
+
+    const lenders = await schema.Lender.findOne({ name })
+    if(lenders){
+        return res.status(400).send({
+            response: "error",
+            message: "lender already exists"
+        })
+    }else {
+
+        await schema.Lender.create({
+            name
+        })
+    }
+}
+
+
+// barrower 
+const barrower =async(req:Request,res:Response)=>{
+    const {name} =req.body
+
+     const  barrower = await schema.Barrower.findOne({name}) 
+     
+     if(barrower){
+        return res.status(400).send({
+            response: "error",
+            message: "barrower already exists"
+        })
+     }else{
+
+         await schema.Barrower.create({
+             name
+         })
+     }
+}
+
+
+
+
+
+export default { user,contract,lender, barrower};

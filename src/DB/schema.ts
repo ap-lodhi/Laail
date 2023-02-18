@@ -1,32 +1,99 @@
 import * as mongoose from "mongoose";
+import { Schema, model, Types } from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  Id: {
+  user_id: {
     type: String,
     required: true,
     unique: true
   },
-  Name: {
+  name: {
     type: String,
     required: true
   },
-  MobileNumber: {
+  mobileNumber: {
     type: Number,
     required: true
   },
-  Location:{
+  location:{
     type:String,
     required:true,
   },
-  Email:{
+  email:{
     type:String,
     required:true
   }
   
 });
 
-const User = mongoose.model('User', userSchema);
+
+const contractSchema=new mongoose.Schema({
+    contract_id: { 
+        type: Number, 
+        required: true 
+    },
+    lender_id: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true 
+    },
+    borrower_id: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true 
+    },
+    principle: { 
+        type: Number, 
+        required: true 
+    },
+    interest: { 
+        type: Number, 
+        required: true 
+    },
+    loan_start_date: { 
+        type: Date, 
+        required: true 
+    },
+    loan_due_date: { 
+        type: Date, 
+        required: true 
+    },
+    is_repaid: { 
+        type: Boolean, 
+        required: true 
+    },
+    created_at: { 
+        type: Date, 
+        default: Date.now()
+    },
+    updated_at: { 
+        type: Date, 
+        default: Date.now()
+    }
+  })
+  
+  const  lenderSchema = new mongoose.Schema({
+     name:{
+        type:String,
+        required:true
+     }
+  })
+
+  
+  const  barrowerSchema = new mongoose.Schema({
+    name:{
+       type:String,
+       required:true
+    }
+ })
+
+  
+const  Lender =mongoose.model('lender',lenderSchema)
+const  Barrower =mongoose.model('lender',barrowerSchema)
+const  contract=mongoose.model("contract", contractSchema);
+
+const User = mongoose.model('user', userSchema);
 
 
 
-export default {User}
+export default {User, contract ,Lender, Barrower}
